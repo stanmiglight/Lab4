@@ -130,10 +130,8 @@ def update_task_v2(task_id: int, task_title: str = None, task_desc: str = None, 
 
 
 if __name__ == "__main__":
-    import os
-    from fastapi import FastAPI
-    from fastapi.responses import PlainTextResponse
-
-    # Ensure the correct port is used
+    # Read the PORT environment variable required by Render
     port = int(os.environ.get("PORT", 8000))
-    app.run(host="0.0.0.0", port=port)
+    # Run the app on the required host and port
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=port)
