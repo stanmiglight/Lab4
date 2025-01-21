@@ -130,13 +130,8 @@ def update_task_v2(task_id: int, task_title: str = None, task_desc: str = None, 
 
 
 if __name__ == "__main__":
-    # Bind the app to the required port and host
+    # Use the PORT environment variable required by Render
     port = int(os.environ.get("PORT", 8000))
-    host = "0.0.0.0"
-
-    # Add a message to verify during startup
-    print(f"Starting FastAPI app on host {host} and port {port}")
-
-    # Use FastAPI's development server (start command: `fastapi dev main.py`)
-    import fastapi_dev  # FastAPI Dev requires this package
-    fastapi_dev.run(app=app, host=host, port=port)
+    # Use uvicorn to run the app
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=port)
