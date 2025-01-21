@@ -127,11 +127,6 @@ The project includes:
 
 ---
 
-## License
-This project is licensed under the MIT License.
-
----
-
 ## Acknowledgments
 - Developed with FastAPI for rapid and efficient API creation.
 - Inspired by the need for secure and versioned API design.
