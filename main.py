@@ -130,6 +130,10 @@ def update_task_v2(task_id: int, task_title: str = None, task_desc: str = None, 
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))  # Get the port from the environment variable
-    app.run(host="0.0.0.0", port=port)
+    import os
+    from fastapi import FastAPI
+    from fastapi.responses import PlainTextResponse
 
+    # Ensure the correct port is used
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
