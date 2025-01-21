@@ -127,3 +127,9 @@ def update_task_v2(task_id: int, task_title: str = None, task_desc: str = None, 
     if is_finished is not None:
         task["is_finished"] = is_finished
     return {"status": "ok", "task": task}
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # Get the port from the environment variable
+    app.run(host="0.0.0.0", port=port)
+
