@@ -1,132 +1,110 @@
-# To-Do API with FastAPI
+# FastAPI Task Management API
 
-## Description
-This project is a simple task management API developed with **FastAPI**. It demonstrates:
-- API authentication using an API key from an `.env` file.
-- Two versions of task management APIs (**v1** and **v2**) with separate task databases.
-- CRUD operations (Create, Read, Update, Delete) for managing tasks.
-
-The project includes:
-- **API Key Protection**: Authentication via an API key in the request header.
-- Two API versions (**v1** and **v2**) with independent routes and task databases.
-- Integration with FastAPI for endpoint routing and HTTP response handling.
-
----
+This is a FastAPI-based web service for managing tasks with API versioning. The API supports CRUD operations on tasks and requires an API key for authentication.
 
 ## Features
-- **API Authentication**: Secure access to endpoints using an API key stored in an `.env` file.
-- **Task Management**: Perform CRUD operations on tasks.
-- **Versioned Endpoints**: Two versions of the API for managing tasks independently.
-
----
-
-## Endpoints
-
-### General
-- **Authorization Header**: All endpoints require the header:
-  ```
-  Authorization: Bearer <API_KEY>
-  ```
-
-### API v1
-#### 1. Root Endpoint
-- **GET** `/apiv1/`
-  - **Response**: Welcome message for API v1.
-
-#### 2. Task Management
-- **GET** `/apiv1/tasks/`
-  - Retrieves all tasks.
-
-- **GET** `/apiv1/tasks/{task_id}`
-  - Retrieves a specific task by its ID.
-
-- **POST** `/apiv1/tasks/`
-  - Creates a new task.
-  - **Parameters**:
-    - `task_title`: Title of the task (string).
-    - `task_desc`: Description of the task (string).
-
-- **DELETE** `/apiv1/tasks/{task_id}`
-  - Deletes a task by its ID.
-
-- **PATCH** `/apiv1/tasks/{task_id}`
-  - Updates task details.
-  - **Parameters**:
-    - `task_title`: (Optional) Updated task title.
-    - `task_desc`: (Optional) Updated task description.
-    - `is_finished`: (Optional) Updated task completion status.
-
-### API v2
-#### 1. Root Endpoint
-- **GET** `/apiv2/`
-  - **Response**: Welcome message for API v2.
-
-#### 2. Task Management
-- **GET** `/apiv2/tasks/`
-  - Retrieves all tasks.
-
-- **GET** `/apiv2/tasks/{task_id}`
-  - Retrieves a specific task by its ID.
-
-- **POST** `/apiv2/tasks/`
-  - Creates a new task.
-  - **Parameters**:
-    - `task_title`: Title of the task (string).
-    - `task_desc`: Description of the task (string).
-
-- **DELETE** `/apiv2/tasks/{task_id}`
-  - Deletes a task by its ID.
-
-- **PATCH** `/apiv2/tasks/{task_id}`
-  - Updates task details.
-  - **Parameters**:
-    - `task_title`: (Optional) Updated task title.
-    - `task_desc`: (Optional) Updated task description.
-    - `is_finished`: (Optional) Updated task completion status.
-
----
+- **FastAPI**: High-performance web framework for building APIs with Python 3.7+.
+- **API Key Authentication**: Secure endpoints with API key validation.
+- **CRUD Operations**: Create, read, update, and delete tasks.
+- **Environment Variables**: Uses `.env` file to store API keys securely.
+- **API Versioning**: Supports `/apiv1/` and `/apiv2/` endpoints.
 
 ## Installation
+### Clone the Repository
+```bash
+git clone https://github.com/yourusername/fastapi-task-api.git
+cd fastapi-task-api
+```
 
-### Prerequisites
-- Python 3.7+
-- **FastAPI** and **Uvicorn** installed.
+### Set Up a Virtual Environment (Optional but Recommended)
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
 
-### Steps
-1. Clone the repository.
-2. Install dependencies using:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Create a `.env` file in the root directory and add your API key:
-   ```env
-   API_KEY=your_api_key_here
-   ```
-4. Run the application using Uvicorn:
-   ```bash
-   uvicorn main:app --reload
-   ```
-5. Access the API at `http://127.0.0.1:8000`.
+### Install Dependencies
+```bash
+pip install fastapi uvicorn python-dotenv
+```
 
----
+### Create a `.env` File
+```plaintext
+API_KEY=your_secure_api_key
+```
+
+### Run the Application
+```bash
+uvicorn main:app --reload
+```
+
+The `--reload` flag enables auto-reloading, so the server restarts on code changes.
 
 ## Usage
+Once the server is running, access the API at `http://127.0.0.1:8000`.
 
-### Testing Endpoints
-- Use tools like **Postman**, **curl**, or your browser to test the API.
-- Add the `Authorization` header for all requests:
-  ```
-  Authorization: Bearer <API_KEY>
-  ```
+## API Endpoints
 
-### Example Request
-- **Get All Tasks (v1)**
-  ```bash
-  curl -H "Authorization: Bearer your_api_key_here" http://127.0.0.1:8000/apiv1/tasks/
-  ```
+### Authentication
+All requests must include the API key in the `Authorization` header:
+```plaintext
+Authorization: Bearer your_secure_api_key
+```
 
----
+### API v1 Endpoints
+
+#### 1. **GET** `/apiv1/`
+**Description**: Welcome message for API v1.
+```json
+{
+  "message": "Welcome to API v1"
+}
+```
+
+#### 2. **GET** `/apiv1/tasks/`
+**Description**: Retrieve all tasks.
+```json
+{
+  "status": "ok",
+  "tasks": [
+    {"task_id": 1, "task_title": "Test 1", "task_desc": "Complete FastAPI basics", "is_finished": false}
+  ]
+}
+```
+
+#### 3. **GET** `/apiv1/tasks/{task_id}`
+**Description**: Retrieve a specific task by ID.
+
+#### 4. **POST** `/apiv1/tasks/`
+**Description**: Create a new task.
+```json
+{
+  "task_title": "New Task",
+  "task_desc": "Learn FastAPI authentication"
+}
+```
+
+#### 5. **PATCH** `/apiv1/tasks/{task_id}`
+**Description**: Update a task (title, description, completion status).
+
+#### 6. **DELETE** `/apiv1/tasks/{task_id}`
+**Description**: Delete a task.
+
+### API v2 Endpoints
+API v2 follows the same structure as v1 but has separate data storage.
+
+## Deployment
+To deploy on Render or another cloud provider:
+```bash
+export PORT=8000
+uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+## Contributing
+Contributions are welcome! Please submit a pull request.
 
 ## Acknowledgments
-- Developed with FastAPI for rapid and efficient API creation.
-- Inspired by the need for secure and versioned API design.
+
+- **Sir Paulo** for the idea!
+- **FastAPI** for providing a modern, high-performance web framework.
+- **Dotenv** for managing environment variables securely.
+- **Python** for being an amazing programming language.
